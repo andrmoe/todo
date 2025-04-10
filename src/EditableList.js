@@ -14,16 +14,13 @@ function AddByText({handleAdd}) {
     </div>)
 }
 
-export default function EditableList({children, handleAdd, handleDelete}) {
+export default function EditableList({children, handleAdd}) {
     return (
         <>
             <ul className="todo-list">
                 {children.map(c => (
                     <li key={c}>
-                        <ul className="editable-component">
-                            <li className="editable-content">{c}</li>
-                            <li className="delete-component"><button onClick={() => handleDelete(c)}>✓</button></li>
-                        </ul>
+                        <div className="editable-content">{c}</div>
                     </li>
                     ))}
             </ul>

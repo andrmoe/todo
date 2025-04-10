@@ -35,14 +35,12 @@
 }
 
 .delete-component {
-  
   justify-content: right;
-
 }
 
 .editable-content {
   justify-content: left;
-  width: 150px;
+  width: 200px;
 }
 .todo-list {
   list-style: none
