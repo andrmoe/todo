@@ -1,26 +1,39 @@
 import './App.css';
-import EditableList from './EditableList';
 import { useState, useEffect } from 'react';
 
 
 function MetaListEntry({children, handleSelect}) {
   return (
-    <><span>{children}</span><button onClick={handleSelect}>🡵</button></>
+    <ul className="list-item">
+      <li className="list-item-child">{children}</li><li className="right-button"><button className="right-button" onClick={handleSelect}>🡵</button></li>
+    </ul>
   )
 }
 
 function Todo({children, handleDelete, handleMove}) {
   return (
-    <ul className="editable-component">
-      <li className="editable-content">{children}</li>
-      <li className="delete-component"><button onClick={handleDelete}>✓</button></li>
-      <li className="delete-component"><button onClick={handleMove}>M</button></li>
+    <ul className="list-item">
+      <li className="list-item-child">{children}</li>
+      <li className="right-button"><button onClick={handleDelete}>✓</button></li>
+      <li className="right-button"><button onClick={handleMove}>M</button></li>
     </ul>
   )
 }
 
+function AddByText({handleAdd}) {
+  const [text, setText] = useState("")
+  return (
+  <div>
+      <input value={text} onChange={e => {setText(e.target.value)}}/>
+      <button onClick={() => {
+                  setText("")
+                  handleAdd(text)
+          }}
+      > + </button>
+  </div>)
+}
 
-function App() {
+export default function App() {
   const [todoItems, setTodoItems] = useState(JSON.parse(localStorage.getItem("temp-todo") ?? "[]"))
   const [currentList, setCurrentList] = useState("No List")
   const [itemToBeMoved, setItemToBeMoved] = useState(null)
@@ -42,29 +55,31 @@ function App() {
   let content;
   if (currentList === "No List") {
     content = <>
-    <EditableList handleAdd={text => setTodoItems([...todoItems, {"text": "", "list": text}])}>
-      {findAllLists().map(l => <MetaListEntry key={l} handleSelect={() => setCurrentList(l)}>{l}</MetaListEntry>)}
-    </EditableList></>
+    <ul className="list">
+      {findAllLists().map(l => <li><MetaListEntry key={l} handleSelect={() => setCurrentList(l)}>{l}</MetaListEntry></li>)}
+    </ul>
+    <AddByText handleAdd={text => setTodoItems([...todoItems, {"text": "", "list": text}])} /></>
   } else if (itemToBeMoved !== null) {
     console.log(itemToBeMoved)
     content = <>
       <h3>{itemToBeMoved.text}</h3>
-      <ul className="todo-list">
-        {findAllLists().filter(l => l !== itemToBeMoved.list).map(l => <MetaListEntry key={l} handleSelect={() => {
+      <ul className="list">
+        {findAllLists().filter(l => l !== itemToBeMoved.list).map(l => <li><MetaListEntry key={l} handleSelect={() => {
           setTodoItems([...todoItems.filter(t => t !== itemToBeMoved), {...itemToBeMoved, list: l}])
           setItemToBeMoved(null)
-          }}>{l}</MetaListEntry>)}
+          }}>{l}</MetaListEntry></li>)}
       </ul>
     </>
   } else {
     content = <><button onClick={() => setCurrentList("No List")}>Lists</button>
     <h3>{currentList}</h3>
-    <EditableList handleAdd={text => setTodoItems([...todoItems, {"text": text, "list": currentList}])}>
-      {todoItems
+    <ul className="list">
+      <li>{todoItems
       .filter(todo => todo.list === currentList && todo.text !== "")
       .map(todo => <Todo handleDelete={() => setTodoItems(todoItems.filter(t => t !== todo))}
-      handleMove={() => setItemToBeMoved(todo)}>{todo.text}</Todo>)}
-    </EditableList></>
+      handleMove={() => setItemToBeMoved(todo)}>{todo.text}</Todo>)}</li>
+    </ul>
+    <AddByText handleAdd={text => setTodoItems([...todoItems, {"text": text, "list": currentList}])} /></>
   }
   return (
     <div className="App">
@@ -74,5 +89,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
