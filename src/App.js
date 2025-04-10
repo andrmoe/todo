@@ -1,22 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
+import EditableList from './EditableList';
+import Todo from './Todo';
 
 function App() {
+  const initialTodo = ["Bread", "Empty Trash", "Fix Website"]
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <EditableList initialList={initialTodo.map(todo => <Todo key={todo} text={todo}/>)}/>
       </header>
     </div>
   );
