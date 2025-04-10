@@ -1,14 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
 import EditableList from './EditableList';
-import Todo from './Todo';
+import { useState, useEffect } from 'react';
+
 
 function App() {
-  const initialTodo = ["Bread", "Empty Trash", "Fix Website"]
+  const [todoItems, setTodoItems] = useState(JSON.parse(localStorage.getItem("temp-todo") ?? "[]"))
+  
+  useEffect(() => {
+    localStorage.setItem("temp-todo", JSON.stringify(todoItems), [todoItems])
+  })
+
   return (
     <div className="App">
       <header className="App-header">
-        <EditableList initialList={initialTodo.map(todo => <Todo key={todo} text={todo}/>)}/>
+        <EditableList handleAdd={c => setTodoItems([...todoItems, c])} handleDelete={c => setTodoItems(todoItems.filter(x => x !== c))}>
+          {todoItems}
+        </EditableList>
       </header>
     </div>
   );

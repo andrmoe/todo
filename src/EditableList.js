@@ -1,35 +1,33 @@
 import { useState } from "react"
-import Todo from "./Todo"
 
-function AddTodo({handleAddTodo}) {
+
+function AddByText({handleAdd}) {
     const [text, setText] = useState("")
     return (
     <div>
         <input value={text} onChange={e => {setText(e.target.value)}}/>
         <button onClick={() => {
                     setText("")
-                    handleAddTodo(<Todo text={text}></Todo>)
+                    handleAdd(text)
             }}
         > + </button>
     </div>)
 }
 
-export default function EditableList({initialList}) {
-    const [clist, setClist] = useState(initialList)
-
+export default function EditableList({children, handleAdd, handleDelete}) {
     return (
         <>
             <ul className="todo-list">
-                {clist.map(component => (
-                    <li>
+                {children.map(c => (
+                    <li key={c}>
                         <ul className="editable-component">
-                            <li className="editable-content">{component}</li>
-                            <li className="delete-component"><button onClick={() => setClist(clist.filter(c => c !== component))}>Del</button></li>
+                            <li className="editable-content">{c}</li>
+                            <li className="delete-component"><button onClick={() => handleDelete(c)}>✓</button></li>
                         </ul>
                     </li>
                     ))}
             </ul>
-            <AddTodo handleAddTodo={c => setClist([...clist, c])} />
+            <AddByText handleAdd={handleAdd} />
         </>
     )
 }
