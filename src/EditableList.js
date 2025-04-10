@@ -19,7 +19,7 @@ export default function EditableList({children, handleAdd}) {
         <>
             <ul className="todo-list">
                 {children.map(c => (
-                    <li key={c}>
+                    <li key={c.key}>
                         <div className="editable-content">{c}</div>
                     </li>
                     ))}

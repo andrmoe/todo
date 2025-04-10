@@ -9,11 +9,12 @@ function MetaListEntry({children, handleSelect}) {
   )
 }
 
-function Todo({children, handleDelete}) {
+function Todo({children, handleDelete, handleMove}) {
   return (
     <ul className="editable-component">
       <li className="editable-content">{children}</li>
       <li className="delete-component"><button onClick={handleDelete}>✓</button></li>
+      <li className="delete-component"><button onClick={handleMove}>M</button></li>
     </ul>
   )
 }
@@ -22,6 +23,7 @@ function Todo({children, handleDelete}) {
 function App() {
   const [todoItems, setTodoItems] = useState(JSON.parse(localStorage.getItem("temp-todo") ?? "[]"))
   const [currentList, setCurrentList] = useState("No List")
+  const [itemToBeMoved, setItemToBeMoved] = useState(null)
 
   useEffect(() => {
     localStorage.setItem("temp-todo", JSON.stringify(todoItems), [todoItems])
@@ -43,13 +45,25 @@ function App() {
     <EditableList handleAdd={text => setTodoItems([...todoItems, {"text": "", "list": text}])}>
       {findAllLists().map(l => <MetaListEntry key={l} handleSelect={() => setCurrentList(l)}>{l}</MetaListEntry>)}
     </EditableList></>
+  } else if (itemToBeMoved !== null) {
+    console.log(itemToBeMoved)
+    content = <>
+      <h3>{itemToBeMoved.text}</h3>
+      <ul className="todo-list">
+        {findAllLists().filter(l => l !== itemToBeMoved.list).map(l => <MetaListEntry key={l} handleSelect={() => {
+          setTodoItems([...todoItems.filter(t => t !== itemToBeMoved), {...itemToBeMoved, list: l}])
+          setItemToBeMoved(null)
+          }}>{l}</MetaListEntry>)}
+      </ul>
+    </>
   } else {
     content = <><button onClick={() => setCurrentList("No List")}>Lists</button>
+    <h3>{currentList}</h3>
     <EditableList handleAdd={text => setTodoItems([...todoItems, {"text": text, "list": currentList}])}>
       {todoItems
       .filter(todo => todo.list === currentList && todo.text !== "")
       .map(todo => <Todo handleDelete={() => setTodoItems(todoItems.filter(t => t !== todo))}
-      >{todo.text}</Todo>)}
+      handleMove={() => setItemToBeMoved(todo)}>{todo.text}</Todo>)}
     </EditableList></>
   }
   return (
