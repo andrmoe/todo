@@ -5,3 +5,4 @@
 - Add timestamps
 - Import from Remember the Milk
 - Add cloud sync
+- Edit task

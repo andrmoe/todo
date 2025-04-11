@@ -63,7 +63,8 @@ export default function App() {
   } else if (itemToBeMoved !== null) {
     console.log(itemToBeMoved)
     content = <>
-      <h3>{itemToBeMoved.text}</h3>
+      <h3>Move "{itemToBeMoved.text}"</h3>
+      <button onClick={() => {setItemToBeMoved(null)}}>Back</button>
       <ul className="list">
         {findAllLists().filter(l => l !== itemToBeMoved.list).map(l => <li><MetaListEntry key={l} handleSelect={() => {
           setTodoItems([...todoItems.filter(t => t !== itemToBeMoved), {...itemToBeMoved, list: l}])

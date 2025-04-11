@@ -28,7 +28,7 @@
   margin: 2px;
   background-color: aqua;
   padding: 2px;
-  width: 240px;
+  width: 330px;
 }
 
 .list-item-child {
@@ -48,7 +48,7 @@
   display: block;
   list-style: none;
   border: 1px solid blue;
-  width: 250px;
+  width: 340px;
   justify-content: center;
   padding: 1px;
   background-color: yellowgreen;
@@ -59,4 +59,5 @@
   display: flex;
   flex-direction: row;
   min-height: 25px;
+  width: 293px;
 }
