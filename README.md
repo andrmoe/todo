@@ -1,5 +1,4 @@
 ## TODO:
-- Scrolling
 - Swipe to finish task
 - Send finished tasks to "finished" list
 - Add timestamps
