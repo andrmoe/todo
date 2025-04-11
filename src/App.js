@@ -2,10 +2,10 @@ import './App.css';
 import { useState, useEffect } from 'react';
 
 
-function MetaListEntry({children, handleSelect}) {
+function MetaListEntry({children, handleSelect, number}) {
   return (
     <ul className="list-item">
-      <li className="list-item-child">{children}</li><li className="right-button"><button className="right-button" onClick={handleSelect}>🡢</button></li>
+      <li className="list-item-child">{children}</li><li><div className="count">{number}</div></li><li className="right-button"><button className="right-button" onClick={handleSelect}>🡢</button></li>
     </ul>
   )
 }
@@ -41,12 +41,14 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("temp-todo", JSON.stringify(todoItems), [todoItems])
   })
-
+  
   function findAllLists() {
     let allLists = []
+    let allListNames = []
     todoItems.forEach(todo => {
-      if (!allLists.includes(todo.list)) {
-        allLists.push(todo.list)
+      if (!allListNames.includes(todo.list)) {
+        allLists.push({"list": todo.list, "count": todoItems.filter(t => t.list === todo.list).length})
+        allListNames.push(todo.list)
       }
     })
     return allLists
@@ -56,7 +58,7 @@ export default function App() {
   if (currentList === "No List") {
     content = 
     <ul className="list">
-      {findAllLists().map(l => <li key={l}><MetaListEntry key={l} handleSelect={() => setCurrentList(l)}>{l}</MetaListEntry></li>)}
+      {findAllLists().map(l => <li key={l}><MetaListEntry key={l.list} number={l.count} handleSelect={() => setCurrentList(l.list)}>{l.list}</MetaListEntry></li>)}
       <li><AddByText handleAdd={text => setTodoItems([...todoItems, {"text": "", "list": text}])} /></li>
     </ul>
 
@@ -66,10 +68,10 @@ export default function App() {
       <h3>Move "{itemToBeMoved.text}"</h3>
       <button onClick={() => {setItemToBeMoved(null)}}>Back</button>
       <ul className="list">
-        {findAllLists().filter(l => l !== itemToBeMoved.list).map(l => <li><MetaListEntry key={l} handleSelect={() => {
-          setTodoItems([...todoItems.filter(t => t !== itemToBeMoved), {...itemToBeMoved, list: l}])
+        {findAllLists().filter(l => l.list !== itemToBeMoved.list).map(l => <li><MetaListEntry key={l.list} number={l.count} handleSelect={() => {
+          setTodoItems([...todoItems.filter(t => t !== itemToBeMoved), {...itemToBeMoved, list: l.list}])
           setItemToBeMoved(null)
-          }}>{l}</MetaListEntry></li>)}
+          }}>{l.list}</MetaListEntry></li>)}
       </ul>
     </>
   } else {
