@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 function MetaListEntry({children, handleSelect, number}) {
   return (
     <ul className="list-item">
-      <li className="list-item-child">{children}</li><li><div className="count">{number}</div></li><li className="right-button"><button className="right-button" onClick={handleSelect}>🡢</button></li>
+      <li className="list-item-child">{children}</li><li><div className="count">{number}</div></li><li className="right-button"><button className="right-button" onClick={handleSelect}>❒</button></li>
     </ul>
   )
 }
