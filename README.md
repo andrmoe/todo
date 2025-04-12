@@ -6,5 +6,4 @@
 - Add cloud sync
 - Edit task
 - Delete lists
-- Fix off by bug in itemcount
 - Make the app mobile responsive
