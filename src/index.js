@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { Import } from './Import';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
+  <HashRouter>
     <Routes>
-      <Route index element={<App/>}/>
-      <Route path="import" element={<Import/>}/> 
+      <Route path="/" element={<App/>}/>
+      <Route path="/import" element={<Import/>}/> 
     </Routes>
-  </BrowserRouter>
+  </HashRouter>
 );
