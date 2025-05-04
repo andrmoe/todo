@@ -1,3 +1,7 @@
+html, body {
+  overflow: hidden;
+}
+
 .App {
   display: flex;
   justify-content: center;
