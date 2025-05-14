@@ -19,5 +19,12 @@ function convert_task(rtm_task) {
     return {"id":rtm_task["id"], "list_id":rtm_task["list_id"],"name":rtm_task["name"],"date_created":unixEpochToISO(rtm_task["date_created"]),"date_modified":unixEpochToISO(rtm_task["date_modified"]),"date_completed":unixEpochToISO(rtm_task["date_completed"])}
 }
 
+export function convert_rtm_info(rtmJSONStr) {
+    rtmJson = JSON.parse(rtmJSONStr)
+    const lists = map(convert_list, rtmJSON["lists"])
+    const tasks = map(convert_task, rtmJSON["tasks"])
+    return [lists, tasks]
+}
+
 console.log(convert_list(example_list))
 console.log(convert_task(example_task))
