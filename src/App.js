@@ -81,12 +81,12 @@ function TodoView({gotoLists, list, items, setItemToBeMoved, addItem, deleteItem
 }
 
 export default function App() {
-  const [todoItems, setTodoItems] = useState(JSON.parse(localStorage.getItem("temp-todo") ?? "[]"))
+  const [todoItems, setTodoItems] = useState(JSON.parse(sessionStorage.getItem("temp-todo") ?? "[]"))
   const [currentList, setCurrentList] = useState(null)
   const [itemToBeMoved, setItemToBeMoved] = useState(null)
 
   useEffect(() => {
-    localStorage.setItem("temp-todo", JSON.stringify(todoItems), [todoItems])
+    sessionStorage.setItem("temp-todo", JSON.stringify(todoItems), [todoItems])
   })
 
   let content;
