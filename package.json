@@ -1,7 +1,7 @@
 {
   "name": "todo",
   "version": "0.1.0",
-  "homepage": "https://todo.andreasmoe.com",
+  "homepage": "https://andrmoe.github.io/todo/",
   "private": true,
   "dependencies": {
     "react": "^19.1.0",
