@@ -89,6 +89,18 @@ export default function App() {
     sessionStorage.setItem("temp-todo", JSON.stringify(todoItems), [todoItems])
   })
 
+  if (todoItems.length == 0) {
+    setTodoItems([
+      {"text": "Commit code", "list": "Inbox"},
+      {"text": "Push code", "list": "Inbox"},
+      {"text": "Forget error handling", "list": "Inbox"},
+      {"text": "Fix bug", "list": "Inbox"},
+      {"text": "Broccoli", "list": "Shopping list"},
+      {"text": "Almond milk", "list": "Shopping list"},
+      {"text": "Pencil", "list": "Shopping list"},
+      {"text": "Fix bug properly", "list": "Postponed"}])
+  }
+
   let content;
   if (currentList === null) {
     content = <ListView 

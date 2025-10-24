@@ -14,7 +14,7 @@ export function Import() {
                 reader.readAsText(selectedFile)
             }
         }}/>
-        <button onClick={}>Import</button>
+        <button onClick={() => null}>Import</button>
         <div>{fileContent}</div>
 
     </>
